@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 interface PlayerRepositoryInterface
 {
-    public function findByUniqueLink($uniqueLink): ?Player;
+    public function findByUniqueLink(string $uniqueLink): ?Player;
 
     public function create(
         Request $request,

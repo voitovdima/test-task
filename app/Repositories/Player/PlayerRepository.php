@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 
 class PlayerRepository implements PlayerRepositoryInterface
 {
-    public function findByUniqueLink($uniqueLink): ?Player
+    public function findByUniqueLink(string $uniqueLink): ?Player
     {
         return Player::where('unique_link', $uniqueLink)->firstOrFail();
     }

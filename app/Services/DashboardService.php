@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Player;
 use App\Repositories\LuckyHistory\LuckyHistoryRepositoryInterface;
 use App\Repositories\Player\PlayerRepositoryInterface;
 use App\Services\Prizes\PrizeService;
-use Illuminate\Support\Carbon;
 
 class DashboardService
 {

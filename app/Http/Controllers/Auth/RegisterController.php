@@ -6,20 +6,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Services\PlayerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    protected $playerService;
-
-    public function __construct(PlayerService $playerService)
-    {
-        $this->playerService = $playerService;
-    }
-
     public function showRegistrationForm()
     {
         return view('auth.register');
@@ -29,12 +21,16 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        $request->validate([
-            'username' => 'required|string|max:255',
-            'phonenumber' => 'required|string|max:20',
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
 
+        // Optionally, log the user in after registration
+        // Auth::login($user);
 
+        return redirect()->route('dashboard');
     }
 
     protected function validator(array $data)

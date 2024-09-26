@@ -9,7 +9,7 @@ use App\Models\Player;
 
 class LuckyHistoryRepository implements LuckyHistoryRepositoryInterface
 {
-    public function getRecentHistory(Player $player, $limit = 3)
+    public function getRecentHistory(Player $player, int $limit = 3)
     {
         return LuckyHistory::where('player_id', $player->getId())
             ->orderBy('created_at', 'desc')
@@ -17,12 +17,12 @@ class LuckyHistoryRepository implements LuckyHistoryRepositoryInterface
             ->get();
     }
 
-    public function createHistory($data)
+    public function createHistory(array $data): LuckyHistory
     {
         return LuckyHistory::create($data);
     }
 
-    public function find($id)
+    public function find(int $id): ?LuckyHistory
     {
         return LuckyHistory::find($id);
     }

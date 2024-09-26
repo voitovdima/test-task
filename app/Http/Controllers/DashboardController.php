@@ -4,26 +4,23 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Repositories\LuckyHistory\LuckyHistoryRepositoryInterface;
 use App\Repositories\Player\PlayerRepositoryInterface;
 use App\Services\DashboardService;
 use App\Services\PlayerService;
 use Illuminate\Support\Carbon;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     protected $playerRepository;
-    protected $luckyHistoryRepository;
     protected $dashboardService;
     protected $playerService;
 
     public function __construct(
-        LuckyHistoryRepositoryInterface $luckyHistoryRepository,
         PlayerRepositoryInterface $playerRepository,
         DashboardService $dashboardService,
         PlayerService $playerService
     ) {
-        $this->luckyHistoryRepository = $luckyHistoryRepository;
         $this->playerRepository = $playerRepository;
         $this->dashboardService = $dashboardService;
         $this->playerService = $playerService;
@@ -57,7 +54,7 @@ class DashboardController extends Controller
             ->with('success', 'Link deactivated successfully.');
     }
 
-    public function imFeelingLucky($link)
+    public function imFeelingLucky($link): View
     {
         $player = $this->playerRepository->findByUniqueLink($link);
         $luckyhistories = $this->dashboardService->imFeelingLucky($player);
@@ -65,7 +62,7 @@ class DashboardController extends Controller
        return view('dashboard',  compact('player', 'luckyhistories'));
     }
 
-    public function showHistory($link)
+    public function showHistory($link): View
     {
         $player = $this->playerRepository->findByUniqueLink($link);
         $history =$this->dashboardService->getHistory($player);
